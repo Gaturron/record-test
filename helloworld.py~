@@ -1,0 +1,63 @@
+import cgi
+import datetime
+import urllib
+import webapp2
+
+import jinja2
+import os
+
+jinja_environment = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+
+from google.appengine.ext import db
+from google.appengine.api import users
+
+from controller.MainPage import MainPage
+from controller.Guestbook import Guestbook
+from controller.List import List
+from controller.List1 import List1
+from controller.AddGroup import AddGroup
+from controller.AddUser import AddUser
+from controller.Main import Main
+from controller.lastResult import lastResult
+from controller.Start import Start
+from controller.Registration import Registration
+from controller.SMAlgorithm import SMAlgorithm
+
+from controller.pruebaemi import pruebaemi
+from controller.callback import callback
+from controller.wav import wav
+from controller.write import write
+from controller.mic import mic
+from controller.record import record
+
+from controller.Time import Time
+from controller.MatchingSetting import MatchingSetting
+
+app = webapp2.WSGIApplication([#('/', MainPage),
+                               #('/sign', Guestbook),
+                               
+                               ('/', Main),
+                               ('/list', List),
+                               ('/listAjax', List1),
+                               #('/main', Main),
+                               ('/addGroup', AddGroup),
+                               ('/addUser', AddUser),
+
+                               ('/lastResult', lastResult),
+                               ('/start', Start),
+                               ('/registration', Registration),
+                               ('/smalgorithm', SMAlgorithm),
+                               ('/matchingsetting', MatchingSetting),
+                               ('/time', Time),
+
+                               ('/pruebaemi', pruebaemi),
+
+                               ('/callback', callback),
+                               ('/wav', wav),
+                               ('/write', write),
+
+                               ('/mic', mic),
+                               ('/record', record),
+                              ],
+                              debug=True)

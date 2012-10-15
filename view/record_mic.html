@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/js/sink.js/audiolib.js"></script>
+    <script src="/js/microphone/microphone.js"></script>
+<script>
+
+
+function load() {
+
+    var bufferTotal;
+
+    var mic = new Microphone(function(){//this function is called when user allow us to access microphone.
+        
+        //sample handler
+        mic.onSamplesAvailable = function(data,channelCount){
+            bufferTotal = bufferTotal + data;
+        };
+        
+        //set sample rate
+        mic.sampleRate = 44100;
+
+        //get list of microphones available
+        console.log(mic.getMicrophoneList());
+
+        //get sample rate
+        console.log(mic.sampleRate);
+
+        //get microphone name in use
+        console.log(mic.name);
+        
+        //starts streaming
+        mic.start();
+        
+        //stops streaming after 1 second
+        setTimeout(function(){
+            mic.stop();
+            console.log("Info TOTAL: "+bufferTotal);
+
+            console.log("===================");
+ 
+            var testRecord = function(){
+
+                var dev = new audioLib.AudioDevice.devices.dummy(function(buffer){
+                        var i, l = buffer.length;
+                        for (i=0; i<l; i++){
+                            
+                            buffer[i] = bufferTotal[i];
+                            console.log(buffer[i]);
+                            i++;
+                        }
+                    }, 2);
+                var recording = dev.record();
+
+                setTimeout(function(){
+                    recording.stop();
+                    dev.kill();
+                    var wave = new Audio('data:audio/wav;base64,' + btoa(recording.toWav()));
+                    wave.controls = true;
+                    document.body.appendChild(wave);
+                }, 1000);
+            }
+
+            console.log("Termino de grabar");
+            testRecord();
+
+        },3000);
+    });
+}
+</script>
+
+</head>
+<body onload="load()"></body>
+</html>
