@@ -1,0 +1,21 @@
+#application: datingroulette
+application: loversmatching
+
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /js
+  static_dir: static/js
+
+- url: /.*
+  script: helloworld.app
+
+libraries:
+- name: jinja2
+  version: latest

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="/js/sink.js/audiolib.js"></script>
+		<script>
+
+		var testRecord = function(){
+
+			var	dev	= new audioLib.AudioDevice.devices.dummy(function(buffer){
+					var i, l = buffer.length, s;
+					for (i=0; i<l; i++){
+						
+						buffer[i] = 10000 * Math.sin(900*i/100000);
+						i++;
+					}
+				}, 2);
+			var recording = dev.record();
+
+			setTimeout(function(){
+				recording.stop();
+				dev.kill();
+				var wave = new Audio('data:audio/wav;base64,' + btoa(recording.toWav()));
+				wave.controls = true;
+				document.body.appendChild(wave);
+			}, 8000);
+		}
+		window.onload = testRecord;
+		
+		</script>
+	</head>
+	<body></body>
+</html>
