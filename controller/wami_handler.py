@@ -11,6 +11,8 @@ dir = os.path.dirname(__file__)
 filename = os.path.join(dir, '../view/wami')
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(filename))
 
+from model.Audio import Audio
+
 # This is just the simplest possible working example that will allow
 # you to record to Google Apps Engine and play it back.  It does not
 # have session tracking.  It just stores temporary data in a global
@@ -32,11 +34,7 @@ class wami_handler(webapp2.RequestHandler):
         wami_handler.data = self.request.body
         logging.info("client-to-server: " + str(len(wami_handler.data)) +
                      " bytes of type " + wami_handler.Ctype)
-        
-# def main():
-#     application = webapp.WSGIApplication([('/audio', wami_handler)],
-#                                          debug=True)
-#     util.run_wsgi_app(application)
 
-# if __name__ == '__main__':
-#     main()
+        audio = Audio(audio = self.request.body)
+        audio.put()
+        

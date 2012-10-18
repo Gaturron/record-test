@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<HTML>
+  <HEAD>
+    <TITLE>Audios</TITLE>
+    <META HTTP-EQUIV="Content-Type" 
+          CONTENT="text/html; charset=utf-8">
+  </HEAD>
+    <BODY>
+
+        <ul id="people">
+        {% for each_audio in audios %}
+          <li>
+            "{{each_audio.date}}"<br>
+
+            <audio controls="controls">
+              <source src="'{{each_audio.audio}}'" type="audio/ogg">
+            </audio>
+
+          </li>
+        {% endfor %}
+        </ul>
+
+  </BODY>
+</HTML>
+
