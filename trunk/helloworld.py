@@ -22,6 +22,7 @@ from controller.record_mic import record_mic
 from controller.basic import basic
 
 from controller.wami_handler import wami_handler
+from controller.audios import audios
 
 app = webapp2.WSGIApplication([('/callback', callback),
                                ('/wav', wav),
@@ -33,6 +34,7 @@ app = webapp2.WSGIApplication([('/callback', callback),
 
                                ('/basic_mic', basic),
 
-                               ('/wamihandler', wami_handler)
+                               ('/wamihandler', wami_handler),
+                               ('/audios', audios)
                               ],
                               debug=True)
